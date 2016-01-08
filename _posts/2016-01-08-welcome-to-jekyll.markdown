@@ -1,6 +1,6 @@
 ---
-layout: post
-title:  "Welcome to Jekyll!"
+layout: hello
+title:  "欢迎来到yatessss的空间啦~"
 date:   2016-01-08 20:46:12 +0800
 categories: jekyll update
 ---
