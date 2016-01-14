@@ -1,0 +1,26 @@
+---
+layout: default
+---
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class='category'>
+        <p>文章分类</p>
+        <ul>
+            {% for cat in site.categories %}
+            <li><a href="{{ site.BASE_PATH }}/post-list#{{ cat[0] }}">{{ cat[0] }}<span> - ({{ cat[1].size }})</span></a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% for category in site.categories %}
+    <h2>{{ category | first }}</h2>
+    <span>{{ category | last | size }}</span>
+    <ul class="arc-list">
+        {% for post in category.last %}
+        <li>{{ post.date | date:"%d/%m/%Y"}}<a href="{{ post.url }}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+
+
+</article>

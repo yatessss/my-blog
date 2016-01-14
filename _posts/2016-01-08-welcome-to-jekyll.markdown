@@ -2,7 +2,7 @@
 layout: post
 title:  "markdown语法简介"
 date:   2016-01-08 20:46:12
-categories: jekyll update
+categories: markdown
 ---
 
 在我看来markdown语法就是可以不需要了解html,来编写博客网页.
