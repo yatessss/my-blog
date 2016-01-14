@@ -10,10 +10,15 @@ title: yatessss
 email: 897969073@qq.com
 description: > # this means to ignore newlines until "baseurl:"
   直到我们失去了,才知道原来拥有的是那么美好.
+
+gems: [jekyll-paginate]
+paginate: 5
+paginate_path: "page:num"
 baseurl:  # the subpath of your site, e.g. /blog
 url: "http://www.yatessss.com" # the base hostname & protocol for your site
 twitter_username: yatessss
 github_username:  yatessss
-
 # Build settings
 markdown: kramdown
+
+
