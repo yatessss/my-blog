@@ -169,6 +169,13 @@
  */
 .page-content {
     padding: $spacing-unit 0;
+    .nav {
+        float: right;
+        position: fixed;
+        right: 20px;
+        margin: 0 50px;
+        max-width: 250px;
+    }
 }
 
 .page-heading {
@@ -193,7 +200,11 @@
     display: block;
     font-size: 24px;
 }
-
+@media (max-width:1280px) {
+    .nav{
+        display: none;
+    }
+}
 
 
 /**

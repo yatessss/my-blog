@@ -8,48 +8,24 @@ layout: default
 
   <ul class="post-list">
     {% for post in paginator.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-  --------------另一种分页方法
-
-  <ul class="posts">
-    {% for post in paginator.posts %}
     <li>
-      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-      <p class="post-date">Posted on {{ post.date | date: "%b %-d, %Y" }} ;
-        浏览量: <span class="visit-count" data-link="{{ post.url | prepend: site.url }}">0</span>次
-        {% for label in post.labels %}
-        <a href="{{ site.baseurl }}/all-articles/?label={{ label }}"><span class="post-label">{{ label }}</span></a>
-        {% endfor %}
+      <h3><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
+      <p class="post-meta">发表于: {{ post.date | date: "%b %-d, %Y" }} ;
+        {% if post.categories %}
+        <span class="post-categories">{{ post.categories }}</span>
+        {% endif %}
       </p>
+      {% if post.description %}
       <p class="post-description">{{ post.description }} <a class="post-link2" href="{{ post.url | prepend: site.baseurl }}">[继续阅读...]</a></p>
+      {% else %}
+      <p class="post-description"><a class="post-link2" href="{{ post.url | prepend: site.baseurl }}">[阅读此文...]</a></p>
+      {% endif %}
     </li>
     {% endfor %}
   </ul>
-  ---------------------搜索框
+
   <script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=9260982647888700394' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script>
 
-  ----------------------------
-  <div class='category'>
-    <p>文章分类</p>
-    <ul>
-      {% for cat in site.categories %}
-      <li><a href="{{ site.BASE_PATH }}/post-list#{{ cat[0] }}">{{ cat[0] }}<span> - ({{ cat[1].size }})</span></a></li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
-
-  ------------------------
   {% if paginator.total_pages > 1 %}
   <div class="pagination">
     {% if paginator.previous_page %}
@@ -75,5 +51,7 @@ layout: default
     {% endif %}
   </div>
   {% endif %}
+
+  <p class="rss-subscribe">订阅 <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 
 </div>
