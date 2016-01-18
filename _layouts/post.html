@@ -1,6 +1,11 @@
 ---
 layout: default
 ---
+
+<div class="toc" >
+  <div id="toc" ></div>
+</div>
+
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
@@ -13,6 +18,27 @@ layout: default
   </div>
 
 </article>
+
+<nav class="pagination fn-clear" id="violet-paging">
+  <div class="pagination-list">
+    {% if page.next %}
+    <a class="next" href="{{ page.next.url }}" rel="bookmark">上一篇{{ page.next.title | truncatewords:5 }}<i class="fa fa-chevron-circle-right"></i></a>
+    {% endif %}
+    {% if page.previous %}
+    <a class="prev" href="{{ page.previous.url }}" rel="bookmark"><i class="fa fa-chevron-circle-left"></i>下一篇{{ page.previous.title | truncatewords:5 }}</a>
+    {% endif %}
+
+  </div>
+</nav>
+
+<div id="related">
+  <h2>最近的文章</h2>
+  <ul class="posts">
+    {% for post in site.related_posts limit:3 %}
+    <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
 
 <div id="disqus_thread"></div>
 <script>
@@ -38,3 +64,9 @@ layout: default
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
 <script id="dsq-count-scr" src="//yatessss.disqus.com/count.js" async></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#toc').toc();
+  });
+</script>
