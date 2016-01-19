@@ -176,6 +176,38 @@
         margin: 0 50px;
         max-width: 250px;
     }
+    .pagination .parallelogram div {
+        -webkit-transform: skewX(20deg);
+        -moz-transform: skewX(20deg);
+        -ms-transform: skewX(20deg);
+        transform: skewX(20deg);
+    }
+    .pagination .parallelogram {
+        position: relative;
+        display: inline-block;
+        padding: 0 10px;
+        height: 24px;
+        line-height: 24px;
+        transition: background .3s;
+        background: #ccc;
+        text-decoration: none;
+        color: #fff;
+        -webkit-transform: skewX(-20deg);
+        -moz-transform: skewX(-20deg);
+        -ms-transform: skewX(-20deg);
+        transform: skewX(-20deg);
+    }
+    a.parallelogram:hover{
+        background: #1abc9c;
+    }
+    .pagination {
+        text-align: right;
+        font-size: 14px;
+        padding: 10px 0;
+    }
+    .pagination .parallelogram.current {
+        background: #205caa;
+    }
 }
 
 .page-heading {
