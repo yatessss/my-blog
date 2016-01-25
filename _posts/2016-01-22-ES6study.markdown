@@ -4,7 +4,7 @@ title: ES6学习笔记
 date: 2016-01-22
 categories: ES6
 ---
-笔记根据阮一峰老师的[ECMAScript 6 入门](http://es6.ruanyifeng.com/#docs/let)，内容基本来自于此书，总结是为了理解学习和加深印象。
+笔记根据阮一峰老师的[ECMAScript 6 入门](http://es6.ruanyifeng.com/#docs/let)，内容基本来自于此书，总结是为了理解学习和加深印象，把认为重要的部分记录下来。
 
 ###1. let命令
 
@@ -234,4 +234,182 @@ console.log(i); // 5
 
 ####ES6的块级作用域
 
-`let`是为JavaScript新增了块级作用域
+`let`是为JavaScript新增了块级作用域。
+{% highlight JavaScript %}
+
+function f1() {
+  let n = 5;
+  if (true) {
+    let n = 10;
+  }
+  console.log(n); // 5
+}
+
+{% endhighlight %} 
+
+最后输出的结果为5，这表示`let`声明的是一个块级作用域，外层的代码块不受内层的影响，如果使用`var`声明的话，最后输出结果为10。
+
+块级作用域出现后，立即执行匿名函数（IIFE）就不是唯一的选择了。
+{% highlight JavaScript %}
+
+// IIFE写法
+(function () {
+  var tmp = ...;
+  ...
+}());
+
+// 块级作用域写法
+{
+  let tmp = ...;
+  ...
+}
+
+{% endhighlight %} 
+
+*******
+
+###3. const命令
+
+const也用来声明变量，这个变量是常量一旦声明，他的值是不可以改变的。
+
+{% highlight JavaScript %}
+
+'use strict';
+const PI = 3.1415;
+PI // 3.1415
+
+PI = 3;
+// TypeError: "PI" is read-only
+
+{% endhighlight %} 
+
+在严格模式下，改变声明的常量的值会报错。在常规模式下不会报错但也不起作用。
+{% highlight JavaScript %}
+
+const PI = 3.1415;
+PI = 3; // 常规模式时，重新赋值无效，但不报错
+PI // 3.1415
+
+{% endhighlight %} 
+
+const声明的变量不可以改变值，所以一旦声明后必须立即初始化。
+
+{% highlight JavaScript %}
+
+'use strict';
+const foo;
+// SyntaxError: missing = in const declaration
+
+{% endhighlight %} 
+
+如上面代码所示，在严格模式下，如果没有立即初始化，会报错。在常规模式下，不会报错，但是以后对`foo`赋值的话也是无效的。
+
+{% highlight JavaScript %}
+
+const foo;
+foo = 1; // 常规模式，重新赋值无效
+foo // undefined
+
+{% endhighlight %} 
+
+`const`的作用与和`let`相同，都是在块级作用域之内有效，并且也不存在声明提升，会出现暂时性死区，只能在声明之后才能够调用。
+
+{% highlight JavaScript %}
+
+if (true) {
+  console.log(MAX); // ReferenceError
+  const MAX = 5;
+}
+
+{% endhighlight %} 
+
+`const`声明的常量，也和`let`一样不可以重复声明。
+
+{% highlight JavaScript %}
+
+var message = "Hello!";
+let age = 25;
+
+// 以下两行都会报错
+const message = "Goodbye!";
+const age = 30;
+
+{% endhighlight %} 
+
+对于复合型变量名，变量名不会指向数据，而是指向数据所在的地址。`const`命令可以使指向的地址不变，但是不能保证地址内的数据不变。比如，如果使用`const`声明了一个对象，其实是声明了一个指向对象的地址，这个地址是不可变的，但是可以为这个对象来添加新的属性。
+
+{% highlight JavaScript %}
+
+const a = [];
+a.push("Hello"); // 可执行
+a.length = 0;    // 可执行
+a = ["Dave"];    // 报错
+
+{% endhighlight %} 
+
+如上，变量`a`是一个数组，数组本身是可以改写的，但是如果将另一个数组赋值给`a`，就会报错。
+
+如果想让一个对象，不能添加新的属性，可以使用`Object.freeze`的方法。
+
+{% highlight JavaScript %}
+
+const foo = Object.freeze({});
+
+// 常规模式时，下面一行不起作用；
+// 严格模式时，该行会报错
+foo.prop = 123;
+
+{% endhighlight %} 
+
+如上，添加新的属性不会起作用，在严格模式下还会报错。
+
+ES5声明变量的方法有两个：`var`,`function`。ES6除了这两种方法外，还有`let`，`const`，`import`和`class`这四种方法。
+
+*******
+
+###4. 跨模块常量
+
+`const`声明的常量只在当前代码块有效。如果想设置跨模块的常量，可以采用下面的写法。
+
+{% highlight JavaScript %}
+
+const foo = Object.freeze({});
+
+// constants.js 模块
+export const A = 1;
+export const B = 3;
+export const C = 4;
+
+// test1.js 模块
+import * as constants from './constants';
+console.log(constants.A); // 1
+console.log(constants.B); // 3
+
+// test2.js 模块
+import {A, B} from './constants';
+console.log(A); // 1
+console.log(B); // 3
+
+{% endhighlight %} 
+
+******
+
+###5. 全局对象的属性
+
+ES6规定了，使用`var`和`function`声明的全局变量，依旧是全局对象的属性；使用`let`命令，`const`命令和`class`命令声明的全局变量，不属于全局对象的属性。
+
+{% highlight JavaScript %}
+
+var a = 1;
+// 如果在Node的REPL环境，可以写成global.a
+// 或者采用通用方法，写成this.a
+window.a // 1
+
+let b = 1;
+window.b // undefined
+
+{% endhighlight %} 
+
+*******
+
+以上。
