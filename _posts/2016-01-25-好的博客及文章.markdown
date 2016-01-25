@@ -1,0 +1,7 @@
+---
+layout: post
+title: 好的博客及文章
+date: 2016-01-25
+categories: ES6
+---
+
