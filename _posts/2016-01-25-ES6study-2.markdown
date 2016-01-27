@@ -318,14 +318,187 @@ baz // undefined
 
 如上代码，等号左边两个变量的次序与等号右边两个属性的次序不一致，但是取值正确，如果变量没有对应的同名属性的话会取不到值。
 
+如果变量名和属性名不一致，我们必须引用一个叫`模式`的东西，我可能理解的比较通俗，先看以下的代码，在做解释。
+
 {% highlight JavaScript %}
 
-var { bar, foo } = { foo: "aaa", bar: "bbb" };
-foo // "aaa"
-bar // "bbb"
+var { foo: baz } = { foo: "aaa", bar: "bbb" };
+baz // "aaa"
 
-var { baz } = { foo: "aaa", bar: "bbb" };
-baz // undefined
+let obj = { first: 'hello', last: 'world' };
+let { first: f, last: l } = obj;
+f // 'hello'
+l // 'world'
 
 {% endhighlight %}
+
+对象的赋值解构的内部机制其实是这样的：
+
+{% highlight JavaScript %}
+
+var { foo: foo, bar: bar } = { foo: "aaa", bar: "bbb" };
+
+{% endhighlight %}
+
+`:`之前的部分我们叫做`模式`，`:`之后的部分才是`变量`，在解构赋值内部机制是先根据模式找到同名的属性，再给对应的变量赋值，真正被赋值的是`：`后面的变量。
+
+在平时对象解构赋值的时候我们把`:`之后的变量给省略掉了，这样在内部他会加上一个和模式名字相同的变量名，在省略了变量名的情况下，我们打印模式名是不会出错的。
+
+但如果`变量`名和`模式`名是不一样的时候，比如下面这种情况：
+
+{% highlight JavaScript %}
+
+var { foo: baz } = { foo: "aaa", bar: "bbb" };
+baz // "aaa"
+foo // error: foo is not defined
+
+{% endhighlight %}
+
+如上这样，真正被赋值的就是变量`baz`，而不是模式`foo`。
+
+和数组一样，解构也可以用于嵌套解构的对象。
+
+{% highlight JavaScript %}
+
+var node = {
+  loc: {
+    start: {
+      line: 1,
+      column: 5
+    }
+  }
+};
+
+var { loc: { start: { line }} } = node;
+line // 1
+loc  // error: loc is undefined
+start // error: start is undefined
+
+{% endhighlight %}
+
+如上，只有`line`是变量，`loc`和`start`都是模式，不会被赋值。
+
+嵌套赋值的例子：
+
+{% highlight JavaScript %}
+
+let obj = {};
+let arr = [];
+
+({ foo: obj.prop, bar: arr[0] } = { foo: 123, bar: true });
+
+obj // {prop:123}
+arr // [true]
+
+{% endhighlight %}
+
+对象的解构也可以指定默认的值。
+
+{% highlight JavaScript %}
+
+var {x = 3} = {};
+x // 3
+
+var {x, y = 5} = {x: 1};
+x // 1
+y // 5
+
+var { message: msg = "Something went wrong" } = {};
+msg // "Something went wrong"
+
+{% endhighlight %}
+
+默认值生效的条件，也是对象的属性值严格等于`undefined`。如果不是严格等于`undefined`默认值就不会生效。
+
+{% highlight JavaScript %}
+
+var {x = 3} = {x: undefined};
+x // 3
+
+var {x = 3} = {x: null};
+x // null
+
+{% endhighlight %}
+
+如果解构失败的话。变量的值也会等于`undefined`。
+
+{% highlight JavaScript %}
+
+var {foo} = {bar: 'baz'}
+foo // undefined
+
+{% endhighlight %}
+
+如果，解构的模式是一个对象的话，而模式名却在等号的右边不存在的话，那么将会报错。因为在解构的时候，首先会寻找与模式同名的属性，如果没有这个属性名就会报错。
+
+{% highlight JavaScript %}
+
+// 报错
+var {foo: {bar}} = {baz: 'baz'}
+
+{% endhighlight %}
+
+###4. 字符串的解构赋值
+
+字符串解构赋值是，会转换为一个类似数组的对象。
+
+{% highlight JavaScript %}
+
+const [a, b, c, d, e] = 'hello';
+a // "h"
+b // "e"
+c // "l"
+d // "l"
+e // "o"
+
+{% endhighlight %}
+
+###5. 数值和布尔值的解构赋值
+
+解构赋值时，如果等号右边是数值和布尔值，会先转为对象。
+
+{% highlight JavaScript %}
+
+let {toString: s} = 123;
+s === Number.prototype.toString // true
+
+let {toString: s} = true;
+s === Boolean.prototype.toString // true
+
+{% endhighlight %}
+
+解构赋值的规则是，只要等号右边的值不是对象，就先将其转化为对象，但是由于`undefined`和`null`不能转为对象，所以对他们进行解构赋值都会报错。
+
+
+###6. 函数参数的解构赋值
+
+{% highlight JavaScript %}
+
+function add([x, y]){
+  return x + y;
+}
+
+add([1, 2]) // 3
+
+{% endhighlight %}
+
+如上代码，函数`add`的参数实际上不是一个数组，而是通过结构得刀的变量`x`和`y`。
+
+函数参数的解构也可以使用默认值。
+
+{% highlight JavaScript %}
+
+function move({x = 0, y = 0} = {}) {
+  return [x, y];
+}
+
+move({x: 3, y: 8}); // [3, 8]
+move({x: 3}); // [3, 0]
+move({}); // [0, 0]
+move(); // [0, 0]
+
+{% endhighlight %}
+
+以上还有很多细节方面没有描述，只是在常用方面做出了总结，详细的[请看](http://es6.ruanyifeng.com/#docs/destructuring)
+
 
