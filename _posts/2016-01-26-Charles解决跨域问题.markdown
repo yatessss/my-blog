@@ -13,7 +13,7 @@ categories: Charles
 
 首先，我们应该设置一下手机的代理，一般都是在wifi链接的位置进行代理的设置，主机名填写本地pc端的ip地址，通过`ifconfig`指令来查看ip地址，可以看到我的ip地址为 172.100.108.94 ，端口号Charles默认为8888，设置好之后，打开Charles，弹出一个对话框选择allow，我们就可以通过Charles的代理来连接网络了。
 
-![p1](https://raw.githubusercontent.com/yatessss/my-blog/gh-pages/img/p1.png)
+![p1](http://7xqch8.com1.z0.glb.clouddn.com/blog_picp1.png)
 
 ******
 
@@ -33,11 +33,11 @@ categories: Charles
 
 所以我们在Charles中找到tools中的map remote选项，如下图所示。
 
-![p2](https://raw.githubusercontent.com/yatessss/my-blog/gh-pages/img/p2.png)
+![p2](http://7xqch8.com1.z0.glb.clouddn.com/blog_picp2.png)
 
 点击add（添加）我们就可以增加一条重定向。在弹出的界面中我们就可以设置我们需要的参数了。如下图。
 
-![p2](https://raw.githubusercontent.com/yatessss/my-blog/gh-pages/img/p3.png)
+![p2](http://7xqch8.com1.z0.glb.clouddn.com/blog_picp3.png)
 
 上面一栏就是我们原本的请求，填写协议，域名，端口号，路径等参数就可以了。下面一栏就是我们需要重定向到的地址，可以看到端口号没有填，他默认是80端口。
 
@@ -45,7 +45,7 @@ categories: Charles
 
 通过抓包查看，我们可以看到通过手机已经可以成功的访问到服务器的接口。
 
-![p2](https://raw.githubusercontent.com/yatessss/my-blog/gh-pages/img/p4.png)
+![p2](http://7xqch8.com1.z0.glb.clouddn.com/blog_picp4.png)
 
 ******
 
