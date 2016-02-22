@@ -9,7 +9,7 @@ categories: markdown
 在我看来markdown语法就是可以不需要了解html,来编写博客网页.
 总结这个也是为了将来自己有不会的地方可以很快的查看一下.
 
-###1. 标题标签<h1>写法
+### 1. 标题标签<h1>写法
 
 * ***markdown中的写法:***
 {% highlight shell-session %}
@@ -31,7 +31,7 @@ categories: markdown
 <h3>其他级别标题</h3>
 {% endhighlight %}
 
-###2. 段落标签<p>写法
+### 2. 段落标签<p>写法
 
 * ***markdown中的写法:***
 {% highlight shell-session %}
@@ -49,7 +49,7 @@ categories: markdown
 
 ---
 
-###3. 强调< em >,粗体< strong >,代码< code >,删除< s >写法
+### 3. 强调< em >,粗体< strong >,代码< code >,删除< s >写法
 * ***markdown中的写法:***
 {% highlight shell-session %}
 各类标签:*强调标签em*,**加粗标签strong**,`代码标签code`
@@ -69,7 +69,7 @@ categories: markdown
 
 ---
 
-###4. 有序列表<ol>和无序列表<ul>写法
+### 4. 有序列表<ol>和无序列表<ul>写法
 * ***markdown中的写法:***
 {% highlight shell-session %}
 有序列表:
@@ -122,7 +122,7 @@ categories: markdown
 
 ---
 
-###5. 链接的写法
+### 5. 链接的写法
 * ***markdown中的写法:***
 
 行内式写法:
@@ -174,7 +174,7 @@ categories: markdown
 
 ---
 
-###6. 反斜杠转译
+### 6. 反斜杠转译
 
 Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：
 
