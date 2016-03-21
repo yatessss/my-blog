@@ -9,3 +9,5 @@ categories: 杂事二三
 这个可能会不定时的放一些看到的比较好的博客和文章。
 
 可能会更新，也可能会一直不更新 /抠鼻
+
+airbnb程序编写规范——[这里](https://github.com/vikingmute/javascript)
